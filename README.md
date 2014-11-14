@@ -14,4 +14,4 @@ Instead, you initialize the WifiDLite instance and then just call methods like c
 
 There's also an experimental feature that periodically "rediscovers" the peers in the network, allowing you to subscribe to a frequently updated list of peers in the network. 
 
-
+Please note this project was written using Android Studio and Gradle. 
