@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="${relativePackage}.${activityClass}">
+
+    <Button
+        android:id="@+id/acquire_peers_button"
+        android:text="@string/acquire_peers"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/peer_list_label"
+        android:text="List of Peers. Click to connect to peer."
+        android:layout_margin="10dp"
+        android:layout_below="@id/acquire_peers_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ListView
+        android:id="@+id/peer_list"
+        android:layout_below="@id/peer_list_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+    </ListView>
+
+</RelativeLayout>

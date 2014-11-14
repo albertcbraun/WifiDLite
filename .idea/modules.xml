@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/WifiDLite.iml" filepath="$PROJECT_DIR$/WifiDLite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WifiDLiteDemoApp/WifiDLiteDemoApp.iml" filepath="$PROJECT_DIR$/WifiDLiteDemoApp/WifiDLiteDemoApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WifiDLiteLib/WifiDLiteLib.iml" filepath="$PROJECT_DIR$/WifiDLiteLib/WifiDLiteLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WifiDLiteProject.iml" filepath="$PROJECT_DIR$/WifiDLiteProject.iml" />
+    </modules>
+  </component>
+</project>
+
