@@ -22,11 +22,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.albertcbraun.wifidlite.Peer;
+import com.albertcbraun.wifidlite.PeerConnectionListener;
 import com.albertcbraun.wifidlite.PeerListAcquisitionListener;
-import com.albertcbraun.wifidlite.impl.SimplePeerConnectionListener;
+import com.albertcbraun.wifidlite.Util;
 import com.albertcbraun.wifidlitedemoapp.R;
 
 import java.util.List;
@@ -36,6 +39,8 @@ import java.util.List;
  * to obtain lists of Peer devices and their services.
  */
 public class Peers extends FragmentBase {
+
+    private static final String TAG = Peers.class.getCanonicalName();
 
     private PeerListAcquisitionListener peerListAcquisitionListener = null;
 
@@ -57,7 +62,8 @@ public class Peers extends FragmentBase {
         View rootView = inflater.inflate(R.layout.fragment_peers, container, false);
 
         // customizations here
-        rootView.findViewById(R.id.acquire_peers_button).setOnClickListener(new View.OnClickListener() {
+        final Button subscribeToPeersButton = (Button) rootView.findViewById(R.id.acquire_peers_button);
+        subscribeToPeersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final ArrayAdapter<Peer> arrayAdapter = new ArrayAdapter<Peer>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1);
@@ -66,21 +72,48 @@ public class Peers extends FragmentBase {
                 peerListAcquisitionListener = new PeerListAcquisitionListener() {
                     @Override
                     public void onPeerListAcquisitionSuccess(List<Peer> peers) {
+                        View label = getActivity().findViewById(R.id.peer_list_label);
                         arrayAdapter.clear();
-                        arrayAdapter.addAll(peers);
+                        if (peers.size() > 0) {
+                            arrayAdapter.addAll(peers);
+                            label.setVisibility(View.VISIBLE);
+                        } else {
+                            label.setVisibility(View.INVISIBLE);
+                        }
                         arrayAdapter.notifyDataSetChanged();
                     }
                 };
                 wifiDLite.subscribeToUpdatesOfPeerList(peerListAcquisitionListener);
+                subscribeToPeersButton.setEnabled(false);
             }
         });
 
-        ListView listView = (ListView)rootView.findViewById(R.id.peer_list);
+        ListView listView = (ListView) rootView.findViewById(R.id.peer_list);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Peer peer = (Peer)parent.getItemAtPosition(position);
-                peer.connect(new SimplePeerConnectionListener());
+                Peer peer = (Peer) parent.getItemAtPosition(position);
+                peer.connect(new PeerConnectionListener() {
+                    @Override
+                    public void onPeerConnectionSuccess(Peer peer) {
+                        Toast t = Toast.makeText(getActivity().getApplicationContext(),
+                                String.format("%s has been invited to connect",
+                                        peer.getWifiP2pDevice().deviceName),
+                                Toast.LENGTH_LONG);
+                        t.show();
+                    }
+
+                    @Override
+                    public void onPeerConnectionFailure(int reasonCode) {
+                        Util.logP2pStatus(TAG, "peer connection failed", reasonCode);
+                        Toast t = Toast.makeText(getActivity().getApplicationContext(),
+                                String.format("Connection attempt failed. P2P Status: %s",
+                                        Util.getP2pStatus(reasonCode)),
+                                Toast.LENGTH_LONG);
+                        t.show();
+                    }
+                });
+
             }
         });
 

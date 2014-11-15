@@ -25,7 +25,7 @@ public interface Configuration {
      * The number of seconds between the last time the
      * {@link com.albertcbraun.wifidlite.Heartbeat}
      * completed a run and the next time a run is started.
-     * <p>
+     * <p/>
      * Note: this has not been tested with delay times below
      * five seconds. Alter at your own risk.
      *

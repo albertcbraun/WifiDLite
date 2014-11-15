@@ -34,7 +34,8 @@ import com.albertcbraun.wifidlite.impl.SimpleWifiP2pActionListener;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -62,9 +63,9 @@ public final class WifiDLite {
     private WiFiDLiteBroadcastReceiver wiFiDLiteBroadcastReceiver = null;
     private WifiP2pManager wifiP2pManager = null;
     private WifiP2pManager.Channel wifiP2pManagerChannel = null;
-    private final List<PeerListAcquisitionListener> oneTimePeerListAcquisitionListeners = new ArrayList<PeerListAcquisitionListener>();
-    private final List<PeerListAcquisitionListener> ongoingPeerListAcquisitionListeners = new ArrayList<PeerListAcquisitionListener>();
-    private final List<CreateGroupListener> oneTimeCreateGroupListeners = new ArrayList<CreateGroupListener>();
+    private final Set<PeerListAcquisitionListener> oneTimePeerListAcquisitionListeners = new HashSet<PeerListAcquisitionListener>();
+    private final Set<PeerListAcquisitionListener> ongoingPeerListAcquisitionListeners = new HashSet<PeerListAcquisitionListener>();
+    private final Set<CreateGroupListener> oneTimeCreateGroupListeners = new HashSet<CreateGroupListener>();
     private ScheduledExecutorService scheduler = null;
     private boolean isWifiP2pEnabled = false;
 
@@ -138,6 +139,9 @@ public final class WifiDLite {
      * Waits for a "peers changed" broadcast event then calls back one time on the
      * PeerListAcquisitionListener instance. After that, this call is expired and no
      * further callbacks will be made.
+     * <p/>
+     * A given instance of a listener can be added only one time. Additional attempts to add
+     * the same listener object instance will be ignored.
      *
      * @param peerListAcquisitionListener a PeerListAcquisitionListener which will be called back only once.
      */
@@ -148,6 +152,9 @@ public final class WifiDLite {
     /**
      * Requests new list of peers each time the Android platform becomes aware of a change to the existing set of peers.
      * Calls listener back each time.
+     * <p/>
+     * A given instance of a listener can be added only one time. Additional attempts to add
+     * the same listener object instance will be ignored.
      *
      * @param peerListAcquisitionListener a PeerListAcquisitionListener which will be called back one or more times.
      */
@@ -156,12 +163,26 @@ public final class WifiDLite {
     }
 
     /**
-     * Unsubscribe from updates of available P2P peers.
+     * Unsubscribe the given {@link com.albertcbraun.wifidlite.PeerListAcquisitionListener} from the internal
+     * list of listeners to be notified when peer devices are detected.
      *
-     * @param peerListAcquisitionListener the PeerListAcquisitionListener instance which you want WifiDLite to stop calling.
+     * @param peerListAcquisitionListener the PeerListAcquisitionListener instance which you want
+     *                                    {@link WifiDLite} to stop calling.
      */
     public void unsubscribeFromUpdatesOfPeerList(PeerListAcquisitionListener peerListAcquisitionListener) {
         this.ongoingPeerListAcquisitionListeners.remove(peerListAcquisitionListener);
+        this.oneTimePeerListAcquisitionListeners.remove(peerListAcquisitionListener);
+    }
+
+    /**
+     * Unsubscribe the given {@link com.albertcbraun.wifidlite.CreateGroupListener} from the internal
+     * list of listeners to be notified when a new group is created by {@link #createGroup}.
+     *
+     * @param createGroupListener the {@link com.albertcbraun.wifidlite.CreateGroupListener} instance which you want
+     *                            {@link WifiDLite} to stop calling.
+     */
+    public void unsubscribeFromCreateGroup(CreateGroupListener createGroupListener) {
+        this.oneTimeCreateGroupListeners.remove(createGroupListener);
     }
 
     /**
@@ -183,15 +204,21 @@ public final class WifiDLite {
      * the group owner. Other useful information, such as the group name and
      * pass phrase, will be passed back to the {@link CreateGroupListener}
      * callback supplied by the createGroup caller.
-     *
+     * <p/>
+     * A given instance of a listener can be added only one time. Additional attempts to add
+     * the same listener object instance will be ignored.
+     * <p/>
      * Please note that this method first tries to remove any existing group.
      * It does this in order to avoid a "busy" status which can be returned
      * from {@link WifiP2pManager#createGroup}
      *
-     * @param listener
+     * @param listener a {@link com.albertcbraun.wifidlite.CreateGroupListener} instance to be
+     *                 notified after the Wifi Direct Group is created.
      */
     public void createGroup(final CreateGroupListener listener) {
-        oneTimeCreateGroupListeners.add(listener);
+        if (!oneTimeCreateGroupListeners.contains(listener)) {
+            oneTimeCreateGroupListeners.add(listener);
+        }
         wifiP2pManager.removeGroup(wifiP2pManagerChannel, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {
@@ -204,7 +231,7 @@ public final class WifiDLite {
 
                     @Override
                     public void onFailure(int reason) {
-                        Util.logStatusCode(TAG, "createGroup", reason);
+                        Util.logP2pStatus(TAG, "createGroup", reason);
                         listener.onCreateGroupFailure(reason);
                     }
                 });
@@ -212,12 +239,11 @@ public final class WifiDLite {
 
             @Override
             public void onFailure(int reason) {
-                Util.logStatusCode(TAG, "removeGroup failed:", reason);
+                Util.logP2pStatus(TAG, "removeGroup failed:", reason);
                 listener.onCreateGroupFailure(reason);
             }
         });
     }
-
 
 
     /**
@@ -244,10 +270,14 @@ public final class WifiDLite {
         sanityCheck();
         switch (acquisitionFrequency) {
             case ONE_TIME_ONLY:
-                oneTimePeerListAcquisitionListeners.add(peerListAcquisitionListener);
+                if (!oneTimePeerListAcquisitionListeners.contains(peerListAcquisitionListener)) {
+                    oneTimePeerListAcquisitionListeners.add(peerListAcquisitionListener);
+                }
                 break;
             case ONGOING:
-                ongoingPeerListAcquisitionListeners.add(peerListAcquisitionListener);
+                if (!ongoingPeerListAcquisitionListeners.contains(peerListAcquisitionListener)) {
+                    ongoingPeerListAcquisitionListeners.add(peerListAcquisitionListener);
+                }
                 break;
         }
         wifiP2pManager.discoverPeers(wifiP2pManagerChannel, new SimpleWifiP2pActionListener("discoverPeers call"));
@@ -264,12 +294,9 @@ public final class WifiDLite {
     }
 
     private void updatePeers(WifiP2pDeviceList wifiP2pDeviceList) {
-        Log.v(TAG, "request peers success. Thread:" + Thread.currentThread().getId());
         Collection<WifiP2pDevice> deviceList = wifiP2pDeviceList.getDeviceList();
-        Log.v(TAG, "request peers. peer device count:" + deviceList.size());
         ArrayList<Peer> peers = new ArrayList<Peer>();
         for (WifiP2pDevice wifiP2pDevice : deviceList) {
-            Log.v(TAG, "adding device as Peer to local ArrayList:" + wifiP2pDevice.deviceName);
             peers.add(new Peer(wifiP2pDevice, wifiP2pManager, wifiP2pManagerChannel));
         }
         // call existing listeners
@@ -277,11 +304,9 @@ public final class WifiDLite {
             for (PeerListAcquisitionListener listener : oneTimePeerListAcquisitionListeners) {
                 listener.onPeerListAcquisitionSuccess(peers);
             }
-            Log.v(TAG, "request peers cleared peer listeners list");
             oneTimePeerListAcquisitionListeners.clear();
         }
         if (ongoingPeerListAcquisitionListeners.size() > 0) {
-            Log.v(TAG, "ongoing onPeerListAcquisitionSuccess handlers (if any) called with updated peer list");
             for (PeerListAcquisitionListener listener : ongoingPeerListAcquisitionListeners) {
                 listener.onPeerListAcquisitionSuccess(peers);
             }
@@ -344,10 +369,6 @@ public final class WifiDLite {
                 if (wifiP2pDeviceList != null) {
                     updatePeers(wifiP2pDeviceList);
                 }
-
-                // also try to discover services as long as we're here
-                // discoverServices();
-
             } else if (WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION.equals(action)) {
                 Log.v(TAG, "P2P Connection changed");
 

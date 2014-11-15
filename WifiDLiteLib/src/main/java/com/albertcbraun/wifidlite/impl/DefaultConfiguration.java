@@ -20,7 +20,6 @@ import com.albertcbraun.wifidlite.Configuration;
 
 /**
  * A {@link com.albertcbraun.wifidlite.Configuration} object with sensible defaults.
- *
  */
 public class DefaultConfiguration implements Configuration {
 

@@ -38,10 +38,10 @@ public class Peer {
     /**
      * Main Constructor.
      *
-     * @param wifiP2pDevice the peer device
+     * @param wifiP2pDevice  the peer device
      * @param wifiP2pManager the main instance of the {@link android.net.wifi.p2p.WifiP2pManager}
-     * @param channel the {@link android.net.wifi.p2p.WifiP2pManager.Channel} associated with
-     *                the wifiP2pManager
+     * @param channel        the {@link android.net.wifi.p2p.WifiP2pManager.Channel} associated with
+     *                       the wifiP2pManager
      */
     public Peer(WifiP2pDevice wifiP2pDevice, WifiP2pManager wifiP2pManager, WifiP2pManager.Channel channel) {
         this.wifiP2pDevice = wifiP2pDevice;
@@ -51,8 +51,8 @@ public class Peer {
 
     @Override
     public String toString() {
-        return String.format("Name:%s, Address:%s, Status:%s", wifiP2pDevice.deviceName,
-                wifiP2pDevice.deviceAddress, Util.getDeviceStatus(wifiP2pDevice.status));
+        return String.format("%s (%s)", wifiP2pDevice.deviceName,
+                wifiP2pDevice.deviceAddress);
     }
 
     /**
@@ -68,7 +68,7 @@ public class Peer {
      * Invites the peer device to form a connection with the current device.
      * The user of the peer device must accept the invitation in order to create a
      * connection.
-     *
+     * <p/>
      * The caller of this method will receive information about the peer device
      * connection in the {@link PeerConnectionListener}.
      *
@@ -78,18 +78,16 @@ public class Peer {
         final String deviceName = wifiP2pDevice.deviceName;
         final String deviceAddress = wifiP2pDevice.deviceAddress;
         if (deviceName != null && deviceAddress != null) {
-            Log.v(TAG, "Considering device address:" + deviceAddress + " device name:" + deviceName);
             wifiP2pManager.requestConnectionInfo(channel, new WifiP2pManager.ConnectionInfoListener() {
                 @Override
-                public void onConnectionInfoAvailable(final WifiP2pInfo info) {
-                    Log.v(TAG, "onConnectionInfoAvailable called on wifiP2pInfo:" + info);
+                public void onConnectionInfoAvailable(final WifiP2pInfo infoAboutCallingDevice) {
                     WifiP2pConfig config = new WifiP2pConfig();
                     config.deviceAddress = deviceAddress;
                     wifiP2pManager.connect(channel, config, new WifiP2pManager.ActionListener() {
                         @Override
                         public void onSuccess() {
                             Log.v(TAG, getMessage(true));
-                            peerConnectionListener.onPeerConnectionSuccess(new WifiP2pInfo(info));
+                            peerConnectionListener.onPeerConnectionSuccess(Peer.this);
                         }
 
                         @Override
@@ -105,6 +103,9 @@ public class Peer {
                     });
                 }
             });
+        } else {
+            Log.w(TAG, String.format("Cannot attempt connection to peer. Device name (%s) and/or address (%s) not available.",
+                    deviceName, deviceAddress));
         }
     }
 

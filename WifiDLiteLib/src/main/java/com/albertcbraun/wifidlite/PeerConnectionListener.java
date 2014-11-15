@@ -16,13 +16,12 @@
 
 package com.albertcbraun.wifidlite;
 
-import android.net.wifi.p2p.WifiP2pInfo;
-
 /**
- * Device connection callbacks for clients of
- * the {@link WifiDLite} object.
+ * Device connection callbacks which occur after attempting
+ * to connect to a specific peer device.
  */
 public interface PeerConnectionListener {
-    public void onPeerConnectionSuccess(WifiP2pInfo wifiP2pInfo);
+    public void onPeerConnectionSuccess(Peer peer);
+
     public void onPeerConnectionFailure(int reasonCode);
 }

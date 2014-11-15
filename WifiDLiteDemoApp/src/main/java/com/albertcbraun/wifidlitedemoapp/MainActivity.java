@@ -90,7 +90,7 @@ public class MainActivity extends Activity
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
 
-        switch(position) {
+        switch (position) {
             case 0:
                 ft.replace(R.id.container, Peers.newInstance(position));
                 break;

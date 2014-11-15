@@ -43,7 +43,7 @@ public class SimpleWifiP2pActionListener implements WifiP2pManager.ActionListene
 
     @Override
     public void onFailure(int code) {
-        Util.logStatusCode(TAG, this.instanceName, code);
+        Util.logP2pStatus(TAG, this.instanceName, code);
     }
 
 

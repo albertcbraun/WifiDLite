@@ -28,17 +28,17 @@ public class Util {
     /**
      * Writes a message to the Android log. Converts the code
      * to a string.
-     * <p>
+     * <p/>
      * All parameters are required.
      *
-     * @param tag the String which identifies the class which is calling this method
+     * @param tag           the String which identifies the class which is calling this method
      * @param messagePrefix a string which is prepended to the logging message and
      *                      helps clarify the logging message.
-     * @param code an int. one of WifiP2pManager.ERROR, WifiP2pManager.P2P_UNSUPPORTED,
-     *             WifiP2pManager.BUSY, WifiP2pManager.NO_SERVICE_REQUESTS
+     * @param code          an int. one of WifiP2pManager.ERROR, WifiP2pManager.P2P_UNSUPPORTED,
+     *                      WifiP2pManager.BUSY, WifiP2pManager.NO_SERVICE_REQUESTS
      */
-    public static void logStatusCode(String tag, String messagePrefix, int code) {
-        Log.v(tag, String.format("%s. WifiP2PManager status:%s", messagePrefix, getP2pStatus(code)));
+    public static void logP2pStatus(String tag, String messagePrefix, int code) {
+        Log.v(tag, String.format("%s P2P Status: %s", messagePrefix, getP2pStatus(code)));
     }
 
     public static String getP2pStatus(int code) {

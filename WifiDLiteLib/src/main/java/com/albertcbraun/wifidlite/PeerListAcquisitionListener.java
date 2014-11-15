@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Peer discovery and listing callbacks for clients of
  * the {@link WifiDLite} object.
- *
+ * <p/>
  * The list of {@link Peer} objects returned contains one {@link Peer}
  * for each {@link android.net.wifi.p2p.WifiP2pDevice} discovered
  * on the local Wifi P2P network.

@@ -24,13 +24,13 @@ import com.albertcbraun.wifidlite.impl.SimpleWifiP2pActionListener;
 
 /**
  * Intended only for internal use.
- *
+ * <p/>
  * Periodically invokes peer discovery related methods on {@link WifiP2pManager} instance
  * owned by the {@link WifiDLite} instance. This is the mechanism for updating the
  * ongoing subscription methods.
- * <p>
+ * <p/>
  * Other tasks might be completed here as well, in future versions.
- * <p>
+ * <p/>
  * This is experimental. It may be removed in a future version.
  */
 class Heartbeat implements Runnable {

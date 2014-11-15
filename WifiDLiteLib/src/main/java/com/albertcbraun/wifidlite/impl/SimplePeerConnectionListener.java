@@ -16,9 +16,9 @@
 
 package com.albertcbraun.wifidlite.impl;
 
-import android.net.wifi.p2p.WifiP2pInfo;
 import android.util.Log;
 
+import com.albertcbraun.wifidlite.Peer;
 import com.albertcbraun.wifidlite.PeerConnectionListener;
 
 /**
@@ -29,9 +29,10 @@ public class SimplePeerConnectionListener implements PeerConnectionListener {
     private static final String TAG = SimplePeerConnectionListener.class.getCanonicalName();
 
     @Override
-    public void onPeerConnectionSuccess(WifiP2pInfo wifiP2pInfo) {
-        Log.v(TAG, "Connection to device succeeded. wifiP2pInfo:" + wifiP2pInfo.toString());
+    public void onPeerConnectionSuccess(Peer peer) {
+        Log.v(TAG, "Connection to device succeeded. Peer name:" + peer.getWifiP2pDevice().deviceName);
     }
+
     @Override
     public void onPeerConnectionFailure(int reasonCode) {
         Log.w(TAG, "Connection to device failed. Reason code:" + reasonCode);

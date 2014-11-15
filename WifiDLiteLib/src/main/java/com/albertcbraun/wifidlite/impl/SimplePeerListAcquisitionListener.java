@@ -33,7 +33,7 @@ public class SimplePeerListAcquisitionListener implements PeerListAcquisitionLis
     @Override
     public void onPeerListAcquisitionSuccess(List<Peer> peers) {
         Log.v(TAG, "Peer discovery succeeded.");
-        for (Peer peer: peers) {
+        for (Peer peer : peers) {
             Log.v(TAG, "Peer:" + peer.getWifiP2pDevice().deviceName);
         }
     }

@@ -6,14 +6,17 @@
 
     <Button
         android:id="@+id/acquire_peers_button"
-        android:text="@string/acquire_peers"
+        android:text="@string/subscribe_to_peers"
         android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <TextView
         android:id="@+id/peer_list_label"
-        android:text="List of Peers. Click to connect to peer."
+        android:text="@string/list_of_peers_heading"
+        android:visibility="invisible"
+        android:layout_alignLeft="@id/acquire_peers_button"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:layout_margin="10dp"
         android:layout_below="@id/acquire_peers_button"
         android:layout_width="wrap_content"

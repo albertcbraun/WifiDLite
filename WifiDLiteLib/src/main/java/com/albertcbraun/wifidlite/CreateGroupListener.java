@@ -19,12 +19,12 @@ package com.albertcbraun.wifidlite;
 import android.net.wifi.p2p.WifiP2pGroup;
 
 /**
-* A callback for use by clients of the library who wish to know the
+ * A callback for use by clients of the library who wish to know the
  * name of the Wifi P2P Group created earlier by calling
  * {@link com.albertcbraun.wifidlite.WifiDLite#createGroup}.
- *
-*/
+ */
 public interface CreateGroupListener {
     public void onCreateGroupSuccess(WifiP2pGroup wifiP2pGroup);
+
     public void onCreateGroupFailure(int status);
 }
