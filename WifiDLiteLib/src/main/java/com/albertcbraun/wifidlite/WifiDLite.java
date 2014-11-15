@@ -220,9 +220,7 @@ public final class WifiDLite {
             oneTimeCreateGroupListeners.add(listener);
         }
         wifiP2pManager.removeGroup(wifiP2pManagerChannel, new WifiP2pManager.ActionListener() {
-            @Override
-            public void onSuccess() {
-                Log.v(TAG, "removeGroup succeeded. about to call createGroup");
+            private void createGroup() {
                 wifiP2pManager.createGroup(wifiP2pManagerChannel, new WifiP2pManager.ActionListener() {
                     @Override
                     public void onSuccess() {
@@ -238,9 +236,15 @@ public final class WifiDLite {
             }
 
             @Override
+            public void onSuccess() {
+                Log.v(TAG, "removeGroup succeeded. about to call createGroup");
+                createGroup();
+            }
+
+            @Override
             public void onFailure(int reason) {
                 Util.logP2pStatus(TAG, "removeGroup failed:", reason);
-                listener.onCreateGroupFailure(reason);
+                createGroup();
             }
         });
     }
