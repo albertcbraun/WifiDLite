@@ -17,7 +17,9 @@ There's also an experimental feature that periodically "rediscovers" the peers i
 [Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 ## Demo App 
-Download from Google Play: https://play.google.com/store/apps/details?id=com.albertcbraun.wifidlitedemoapp
+There is a demo app project separate from the library which is included in this source code. Please see the demo app's MainActivity and various fragments for examples of code use.
+
+You can also download the demo app from Google Play: https://play.google.com/store/apps/details?id=com.albertcbraun.wifidlitedemoapp
 
 ## Build
 This project was written using Android Studio and Gradle. You should be able to check it out directly from GitHub using  Android Studio. 
