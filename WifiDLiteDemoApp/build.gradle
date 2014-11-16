@@ -25,12 +25,52 @@ android {
         minSdkVersion 16
         targetSdkVersion 21
         versionCode 1
-        versionName "1.0"
+        versionName "0.1"
+    }
+    signingConfigs {
+        buildMachineRelease {
+            storeFile file("RELEASE_KEYSTORE_PATH")
+            storePassword System.getenv("RELEASE_KEYSTORE_PASSWORD")
+            keyAlias System.getenv("RELEASE_KEY_ALIAS")
+            keyPassword System.getenv("RELEASE_KEY_PASSWORD")
+        }
     }
     buildTypes {
-        release {
-            runProguard false
+        buildMachineRelease {
+            signingConfig signingConfigs.buildMachineRelease
+            runProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            zipAlign true
+            debuggable false
+        }
+        debug {
+            runProguard true
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            zipAlign true
+        }
+    }
+
+    project.ext.set("archivesBaseName", "WifiDLite");
+
+    // Automatically define tasks which create javadoc documentation.
+    // These tasks have names like "generateReleaseJavadoc", "generateDebugJavadoc", ...
+    android.applicationVariants.all { variant ->
+        task("generate${variant.name.capitalize()}Javadoc", type: Javadoc) {
+            title = "Documentation for Android $android.defaultConfig.versionName b$android.defaultConfig.versionCode"
+            destinationDir = new File("${project.getProjectDir()}/doc/compiled/", variant.baseName)
+            source = variant.javaCompile.source
+
+            ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+            classpath = files(variant.javaCompile.classpath.files) + files(ext.androidJar)
+
+            description "Generates Javadoc for $variant.name."
+
+            options.memberLevel = org.gradle.external.javadoc.JavadocMemberLevel.PRIVATE
+            options.links("http://docs.oracle.com/javase/7/docs/api/");
+            options.links("http://developer.android.com/reference/reference/");
+            exclude '**/BuildConfig.java'
+            exclude '**/R.java'
         }
     }
 }
