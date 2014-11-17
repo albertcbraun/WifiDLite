@@ -29,7 +29,7 @@ android {
     }
     signingConfigs {
         buildMachineRelease {
-            storeFile file("RELEASE_KEYSTORE")
+            storeFile System.getenv("RELEASE_KEYSTORE")
             storePassword System.getenv("RELEASE_KEYSTORE_PASSWORD")
             keyAlias System.getenv("RELEASE_KEY_ALIAS")
             keyPassword System.getenv("RELEASE_KEY_PASSWORD")
