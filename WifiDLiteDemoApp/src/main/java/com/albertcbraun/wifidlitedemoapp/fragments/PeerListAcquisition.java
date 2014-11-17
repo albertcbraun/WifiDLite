@@ -38,9 +38,9 @@ import java.util.List;
  * A fragment demonstrating the ability of the WifiDLite library
  * to obtain lists of Peer devices and their services.
  */
-public class Peers extends FragmentBase {
+public class PeerListAcquisition extends FragmentBase {
 
-    private static final String TAG = Peers.class.getCanonicalName();
+    private static final String TAG = PeerListAcquisition.class.getCanonicalName();
 
     private PeerListAcquisitionListener peerListAcquisitionListener = null;
 
@@ -48,8 +48,8 @@ public class Peers extends FragmentBase {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static Peers newInstance(int sectionNumber) {
-        Peers fragment = new Peers();
+    public static PeerListAcquisition newInstance(int sectionNumber) {
+        PeerListAcquisition fragment = new PeerListAcquisition();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
@@ -59,11 +59,11 @@ public class Peers extends FragmentBase {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_peers, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_peer_list_acquisition, container, false);
 
         // customizations here
-        final Button subscribeToPeersButton = (Button) rootView.findViewById(R.id.acquire_peers_button);
-        subscribeToPeersButton.setOnClickListener(new View.OnClickListener() {
+        final Button acquirePeersButton = (Button) rootView.findViewById(R.id.acquire_peers_button);
+        acquirePeersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final ArrayAdapter<Peer> arrayAdapter = new ArrayAdapter<Peer>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1);
@@ -83,8 +83,14 @@ public class Peers extends FragmentBase {
                         arrayAdapter.notifyDataSetChanged();
                     }
                 };
-                wifiDLite.subscribeToUpdatesOfPeerList(peerListAcquisitionListener);
-                subscribeToPeersButton.setEnabled(false);
+                wifiDLite.acquireCurrentPeerList(peerListAcquisitionListener);
+
+                wifiDLite.acquireCurrentPeerList(new PeerListAcquisitionListener() {
+                    @Override
+                    public void onPeerListAcquisitionSuccess(List<Peer> peers) {
+
+                    }
+                });
             }
         });
 

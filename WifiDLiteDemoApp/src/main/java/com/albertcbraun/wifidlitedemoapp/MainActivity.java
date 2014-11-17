@@ -30,7 +30,8 @@ import com.albertcbraun.wifidlite.WifiDLite;
 import com.albertcbraun.wifidlite.impl.DefaultConfiguration;
 import com.albertcbraun.wifidlitedemoapp.fragments.Misc;
 import com.albertcbraun.wifidlitedemoapp.fragments.NavigationDrawerFragment;
-import com.albertcbraun.wifidlitedemoapp.fragments.Peers;
+import com.albertcbraun.wifidlitedemoapp.fragments.PeerListAcquisition;
+import com.albertcbraun.wifidlitedemoapp.fragments.PeerListSubscription;
 
 
 public class MainActivity extends Activity
@@ -92,9 +93,12 @@ public class MainActivity extends Activity
 
         switch (position) {
             case 0:
-                ft.replace(R.id.container, Peers.newInstance(position));
+                ft.replace(R.id.container, PeerListAcquisition.newInstance(position));
                 break;
             case 1:
+                ft.replace(R.id.container, PeerListSubscription.newInstance(position));
+                break;
+            case 2:
                 ft.replace(R.id.container, Misc.newInstance(position));
                 break;
         }
@@ -109,6 +113,9 @@ public class MainActivity extends Activity
                 break;
             case 1:
                 mTitle = getString(R.string.title_section1);
+                break;
+            case 2:
+                mTitle = getString(R.string.title_section2);
                 break;
         }
     }

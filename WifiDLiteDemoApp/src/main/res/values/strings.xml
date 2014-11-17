@@ -18,8 +18,9 @@
 <resources>
 
     <string name="app_name">WifiDLiteDemoApp</string>
-    <string name="title_section0">Peers</string>
-    <string name="title_section1">Misc</string>
+    <string name="title_section0">Peer List Acquisition</string>
+    <string name="title_section1">Peer List Subscription</string>
+    <string name="title_section2">Misc</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
@@ -27,6 +28,7 @@
     <string name="create_group">Create Group</string>
     <string name="acquire_peers">Acquire Peers</string>
     <string name="subscribe_to_peers">Subscribe to Peer List Updates</string>
+    <string name="acquire_peer_list">Acquire Peer List</string>
     <string name="create_random_dns_service">Create A Random DNS Service Listing</string>
     <string name="list_of_peers_heading">Click below to connect to a peer device:</string>
 
