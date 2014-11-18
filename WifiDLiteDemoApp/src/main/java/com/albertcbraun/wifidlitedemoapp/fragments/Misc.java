@@ -57,7 +57,7 @@ public class Misc extends FragmentBase {
         rootView.findViewById(R.id.open_wifi_settings_dialog_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wifiDLite.openWifiSettings(null);
+                wifiDLite.openWifiSettings();
             }
         });
 

@@ -28,7 +28,6 @@ import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.View;
 
 import com.albertcbraun.wifidlite.impl.SimpleWifiP2pActionListener;
 
@@ -188,12 +187,8 @@ public final class WifiDLite {
     /**
      * Opens the system Settings dialog for adjusting WiFi settings
      * by starting a new Activity.
-     *
-     * @param ignored is not used, but its presence here gives
-     *                this method the right signature for use as a Button
-     *                onClick handler
      */
-    public void openWifiSettings(View ignored) {
+    public void openWifiSettings() {
         Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.context.startActivity(intent);
