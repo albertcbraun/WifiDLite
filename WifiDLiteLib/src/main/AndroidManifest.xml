@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (c) 2014 Albert C. Braun
   ~
@@ -15,6 +16,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          android:supportsRtl="false"
           package="com.albertcbraun.wifidlite">
 
     <application

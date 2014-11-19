@@ -6,7 +6,7 @@
 
     <Button
         android:id="@+id/open_wifi_settings_dialog_button"
-        android:text="Open WiFi Settings"
+        android:text="@string/open_wifi_settings"
         android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

@@ -1,7 +1,8 @@
 
 ### Description
-An (experimental) Android library project designed to make certain Wifi Direct P2P tasks a little easier. 
-Also includes demo app. 
+An experimental, Android library project (in alpha) designed to make certain Wifi Direct P2P tasks a little easier.
+
+Also includes demo app.
 
 The idea behind this library is to make it easier for you to carry out certain Wifi Direct tasks (like creating a P2P group,  finding the current collection of peer devices, opening the Wifi Settings dialog). 
 
@@ -15,9 +16,10 @@ There's also an experimental feature that periodically "rediscovers" the peers i
 [Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 ### Demo App
-There is a demo app project separate from the library which is included in this source code. Please see the demo app's MainActivity and various fragments for examples of code use.
+There is a demo app project separate from the library which is included in this source code. Please see below (and the demo app's MainActivity and fragments) for examples of code use.
 
-You can also download the demo app from Google Play: https://play.google.com/store/apps/details?id=com.albertcbraun.wifidlitedemoapp
+You can also download the demo app from the Google Play Store:
+https://play.google.com/store/apps/details?id=com.albertcbraun.wifidlitedemoapp
 
 ### Code Snippets
 
@@ -42,37 +44,37 @@ Obtain list of peer devices on your Android's local Wifi Direct network:
 
 Invite a specific peer to connect:
 
-                peer.connect(new PeerConnectionListener() {
-                    @Override
-                    public void onPeerConnectionSuccess(Peer peer) {
-                        // connection handling code goes here
-                         ...
-                    }
+    peer.connect(new PeerConnectionListener() {
+            @Override
+            public void onPeerConnectionSuccess(Peer peer) {
+            // connection handling code goes here
+            ...
+            }
 
-                    @Override
-                    public void onPeerConnectionFailure(int reasonCode) {
-                        // note the Util convenience method for mapping
-                        // the Android platform's reasonCode to human readable String
-                        Util.logP2pStatus(TAG, "peer connection failed", reasonCode);
+            @Override
+            public void onPeerConnectionFailure(int reasonCode) {
+            // note the Util convenience method for mapping
+            // the Android platform's reasonCode to human readable String
+            Util.logP2pStatus(TAG, "peer connection failed", reasonCode);
 
-                        // invite-failed handling code goes here
-                         ...
-                    }
-                });
+            // invite-failed handling code goes here
+            ...
+        }
+    });
 
 Make the current Android device a P2P group owner:
 
-                wifiDLite.createGroup(new CreateGroupListener() {
-                    @Override
-                    public void onCreateGroupSuccess(WifiP2pGroup wifiP2pGroup) {
-                        // success message handling here
-                    }
+    wifiDLite.createGroup(new CreateGroupListener() {
+        @Override
+        public void onCreateGroupSuccess(WifiP2pGroup wifiP2pGroup) {
+            // success message handling here
+        }
 
-                    @Override
-                    public void onCreateGroupFailure(int status) {
-                        // failure message handling here
-                    }
-                });
+        @Override
+        public void onCreateGroupFailure(int status) {
+        // failure message handling here
+        }
+    });
 
 Display the Android Wifi settings dialog:
 
@@ -97,7 +99,10 @@ Dispose of the WifiDLite object:
 ### Checkout and Build
 This project was written using Android Studio and Gradle.
 
-You should be able to check it out directly from GitHub in Android Studio with VCS|Checkout from Version Control|Github. Then use this for the VCS repository url: https://github.com/albertcbraun/WifiDLite.git
+You should be able to check it out directly from GitHub in Android Studio:
+
+* VCS|Checkout from Version Control|Github.
+* VCS repository url: https://github.com/albertcbraun/WifiDLite.git
 
 (If you want to build it in Eclipse, you'll have to perform some local customizations of your own. See for example: https://code.google.com/p/maven-android-plugin/wiki/AAR ) 
 
