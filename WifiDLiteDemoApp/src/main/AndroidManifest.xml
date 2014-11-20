@@ -16,7 +16,6 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          android:supportsRtl="false"
           package="com.albertcbraun.wifidlitedemoapp">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>

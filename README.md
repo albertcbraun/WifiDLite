@@ -45,14 +45,14 @@ Obtain list of peer devices on your Android's local Wifi Direct network:
 Invite a specific peer to connect:
 
     peer.connect(new PeerConnectionListener() {
-            @Override
-            public void onPeerConnectionSuccess(Peer peer) {
+       @Override
+       public void onPeerConnectionSuccess(Peer peer) {
             // connection handling code goes here
             ...
-            }
+       }
 
-            @Override
-            public void onPeerConnectionFailure(int reasonCode) {
+       @Override
+       public void onPeerConnectionFailure(int reasonCode) {
             // note the Util convenience method for mapping
             // the Android platform's reasonCode to human readable String
             Util.logP2pStatus(TAG, "peer connection failed", reasonCode);
@@ -72,18 +72,18 @@ Make the current Android device a P2P group owner:
 
         @Override
         public void onCreateGroupFailure(int status) {
-        // failure message handling here
+            // failure message handling here
         }
     });
 
 Display the Android Wifi settings dialog:
 
-      rootView.findViewById(R.id.open_wifi_settings_dialog_button).setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              wifiDLite.openWifiSettings();
-          }
-      });
+    rootView.findViewById(R.id.open_wifi_settings_dialog_button).setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            wifiDLite.openWifiSettings();
+        }
+    });
 
 Dispose of the WifiDLite object:
 
@@ -105,5 +105,4 @@ You should be able to check it out directly from GitHub in Android Studio:
 * VCS repository url: https://github.com/albertcbraun/WifiDLite.git
 
 (If you want to build it in Eclipse, you'll have to perform some local customizations of your own. See for example: https://code.google.com/p/maven-android-plugin/wiki/AAR ) 
-
 

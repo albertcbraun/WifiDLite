@@ -157,7 +157,7 @@ public final class WifiDLite {
      *
      * @param peerListAcquisitionListener a PeerListAcquisitionListener which will be called back one or more times.
      */
-    public void subscribeToUpdatesOfPeerList(final PeerListAcquisitionListener peerListAcquisitionListener) {
+    public void subscribe(final PeerListAcquisitionListener peerListAcquisitionListener) {
         acquirePeerList(peerListAcquisitionListener, AcquisitionFrequency.ONGOING);
     }
 
@@ -168,7 +168,7 @@ public final class WifiDLite {
      * @param peerListAcquisitionListener the PeerListAcquisitionListener instance which you want
      *                                    {@link WifiDLite} to stop calling.
      */
-    public void unsubscribeFromUpdatesOfPeerList(PeerListAcquisitionListener peerListAcquisitionListener) {
+    public void unsubscribe(PeerListAcquisitionListener peerListAcquisitionListener) {
         this.ongoingPeerListAcquisitionListeners.remove(peerListAcquisitionListener);
         this.oneTimePeerListAcquisitionListeners.remove(peerListAcquisitionListener);
     }
@@ -180,7 +180,7 @@ public final class WifiDLite {
      * @param createGroupListener the {@link com.albertcbraun.wifidlite.CreateGroupListener} instance which you want
      *                            {@link WifiDLite} to stop calling.
      */
-    public void unsubscribeFromCreateGroup(CreateGroupListener createGroupListener) {
+    public void unsubscribe(CreateGroupListener createGroupListener) {
         this.oneTimeCreateGroupListeners.remove(createGroupListener);
     }
 

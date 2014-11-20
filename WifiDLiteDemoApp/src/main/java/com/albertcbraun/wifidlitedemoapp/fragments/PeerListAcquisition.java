@@ -130,7 +130,7 @@ public class PeerListAcquisition extends FragmentBase {
     public void onDestroy() {
         super.onDestroy();
         if (wifiDLite != null) {
-            wifiDLite.unsubscribeFromUpdatesOfPeerList(peerListAcquisitionListener);
+            wifiDLite.unsubscribe(peerListAcquisitionListener);
             wifiDLite = null;
         }
     }

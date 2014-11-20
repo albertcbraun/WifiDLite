@@ -83,7 +83,7 @@ public class PeerListSubscription extends FragmentBase {
                         arrayAdapter.notifyDataSetChanged();
                     }
                 };
-                wifiDLite.subscribeToUpdatesOfPeerList(peerListAcquisitionListener);
+                wifiDLite.subscribe(peerListAcquisitionListener);
                 subscribeToPeersButton.setEnabled(false);
             }
         });
@@ -124,7 +124,7 @@ public class PeerListSubscription extends FragmentBase {
     public void onDestroy() {
         super.onDestroy();
         if (wifiDLite != null) {
-            wifiDLite.unsubscribeFromUpdatesOfPeerList(peerListAcquisitionListener);
+            wifiDLite.unsubscribe(peerListAcquisitionListener);
             wifiDLite = null;
         }
     }
