@@ -18,9 +18,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven'
 
 ext {
-    PUBLISH_GROUP_ID = 'com.albertcbraun'
-    PUBLISH_ARTIFACT_ID = 'wifidlite'
-    PUBLISH_VERSION = '0.1.0'
+    PUBLISH_GROUP_ID = 'com.albertcbraun.wifidlite'
+    PUBLISH_ARTIFACT_ID = 'wifidlite-lib'
+    PUBLISH_VERSION = '0.1.1'
 }
 
 android {
