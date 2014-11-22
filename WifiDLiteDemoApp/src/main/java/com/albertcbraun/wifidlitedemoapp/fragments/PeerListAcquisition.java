@@ -84,13 +84,6 @@ public class PeerListAcquisition extends FragmentBase {
                     }
                 };
                 wifiDLite.acquireCurrentPeerList(peerListAcquisitionListener);
-
-                wifiDLite.acquireCurrentPeerList(new PeerListAcquisitionListener() {
-                    @Override
-                    public void onPeerListAcquisitionSuccess(List<Peer> peers) {
-
-                    }
-                });
             }
         });
 

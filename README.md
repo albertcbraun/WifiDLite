@@ -18,29 +18,39 @@ There's also an experimental feature that periodically "rediscovers" the peers i
 ### Demo App
 There is a demo app project separate from the library which is included in this source code. Please see below (and the demo app's MainActivity and fragments) for examples of code use.
 
-You can also download the demo app from the Google Play Store:
-https://play.google.com/store/apps/details?id=com.albertcbraun.wifidlitedemoapp
+You can also [download the demo app from the Google Play Store](https://play.google.com/store/apps/details?id=com.albertcbraun.wifidlitedemoapp)
 
 ### Code Snippets
 
-Obtain list of peer devices on your Android's local Wifi Direct network:
+Initialize the WifiDLite singleton:
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        // initialize WifiDLite singleton
         WifiDLite wifiDLite = WifiDLite.getInstance();
         wifiDLite.initialize(getApplicationContext(), new DefaultConfiguration());
-
-        // call a method on the singleton by feeding it an appropriate listener
-        wifiDLite.acquireCurrentPeerList(new PeerListAcquisitionListener() {
-            @Override
-            public void onPeerListAcquisitionSuccess(List<Peer> peers) {
-                // note that each peer device is represented by a special Peer object
-                Log.v("MyListener", "Acquired a list of P2P Peers");
-            }
-        });
     }
+
+
+Obtain list of peer devices on your Android's local Wifi Direct network:
+
+    // call a method on the singleton by feeding it an appropriate listener
+    wifiDLite.acquireCurrentPeerList(new PeerListAcquisitionListener() {
+        @Override
+        public void onPeerListAcquisitionSuccess(List<Peer> peers) {
+            // note that each peer device is represented by a special Peer object
+            Log.v("MyListener", "Acquired a list of P2P Peers");
+        }
+    });
+
+Create an ongoing subscription to the list of peer devices:
+
+    wifiDLite.subscribe(new PeerListAcquisitionListener() {
+        @Override
+        public void onPeerListAcquisitionSuccess(List<Peer> peers) {
+            // note that each peer device is represented by a special Peer object
+            Log.v("MyListener", "Received periodic update to list of P2P Peers");
+        }
+    });
 
 Invite a specific peer to connect:
 
@@ -104,5 +114,5 @@ You should be able to check it out directly from GitHub in Android Studio:
 * VCS|Checkout from Version Control|Github.
 * VCS repository url: https://github.com/albertcbraun/WifiDLite.git
 
-(If you want to build it in Eclipse, you'll have to perform some local customizations of your own. See for example: https://code.google.com/p/maven-android-plugin/wiki/AAR ) 
+If you want to build it in Eclipse, you'll have to [carry out some local customizations.](https://code.google.com/p/maven-android-plugin/wiki/AAR)
 
