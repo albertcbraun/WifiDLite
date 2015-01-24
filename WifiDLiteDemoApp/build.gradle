@@ -39,16 +39,16 @@ android {
     buildTypes {
         buildMachineRelease {
             signingConfig signingConfigs.buildMachineRelease
-            runProguard true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            zipAlign true
+            zipAlignEnabled true
             debuggable false
         }
         debug {
-            runProguard true
+            minifyEnabled true
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            zipAlign true
+            zipAlignEnabled true
         }
     }
 
