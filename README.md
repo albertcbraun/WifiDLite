@@ -116,7 +116,13 @@ You should be able to check it out directly from GitHub in Android Studio:
 
 If you want to build it in Eclipse, you'll have to [carry out some local customizations.](https://code.google.com/p/maven-android-plugin/wiki/AAR)
 
-### Download 
+### Precompiled Android Archive File
 
+The files are available here:
 [ ![Download](https://api.bintray.com/packages/albertcbraun/maven/com.albertcbraun.wifidlite%3Awifidilite-lib/images/download.svg) ](https://bintray.com/albertcbraun/maven/com.albertcbraun.wifidlite%3Awifidilite-lib/_latestVersion)
+
+You can also include the dependency in your gradle build file (jCenter repo):
+````
+compile(group: 'com.albertcbraun.wifidlite', name: 'wifidlite-lib', version: '0.1.1', ext: 'aar')
+````
 
